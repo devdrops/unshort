@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  BUILD_OS="linux"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  BUILD_OS="darwin"
+else
+  echo "SO não suportado:" $OSTYPE
+fi
+
+docker run \
+  -ti --rm \
+  -v $(pwd):/unshort \
+  -w /unshort \
+  golang:1.19 sh -c "GOOS=${BUILD_OS} GOARCH=amd64 go build -o ./bin/unshort ./cmd"
